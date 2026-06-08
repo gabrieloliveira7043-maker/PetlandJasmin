@@ -218,6 +218,28 @@
   .service-card h4 { font-size: 0.9rem; font-weight: 800; color: var(--black); margin-bottom: 6px; }
   .service-card p { font-size: 0.8rem; color: var(--muted); line-height: 1.6; }
 
+  /* FORMULÁRIO */
+  .form-section { background: var(--black); padding: 90px 48px; }
+  .form-section .section-label { color: var(--warm, var(--orange)); }
+  .form-section .section-title { color: var(--white); }
+  .form-section .section-title .accent { color: var(--orange); }
+  .form-wrap { max-width: 580px; margin: 48px auto 0; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 28px; padding: 40px; }
+  .form-group { display: flex; flex-direction: column; gap: 8px; margin-bottom: 20px; }
+  .form-group label { font-size: 0.78rem; font-weight: 800; color: rgba(255,255,255,0.6); text-transform: uppercase; letter-spacing: 0.06em; }
+  .form-group input, .form-group select { background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.12); border-radius: 12px; padding: 14px 16px; color: white; font-size: 0.95rem; font-family: 'Nunito', sans-serif; outline: none; transition: border 0.2s; width: 100%; }
+  .form-group input::placeholder { color: rgba(255,255,255,0.3); }
+  .form-group input:focus, .form-group select:focus { border-color: var(--orange); }
+  .form-group select { cursor: pointer; appearance: none; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='rgba(255,255,255,0.4)' d='M6 8L1 3h10z'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 16px center; background-color: rgba(255,255,255,0.07); }
+  .form-group select option { background: #333434; color: white; }
+  .form-submit { width: 100%; padding: 16px; background: var(--orange); color: white; border: none; border-radius: 14px; font-size: 1rem; font-weight: 900; cursor: pointer; transition: all 0.25s; font-family: 'Nunito', sans-serif; margin-top: 8px; }
+  .form-submit:hover { background: var(--orange-light); transform: translateY(-2px); box-shadow: 0 8px 24px rgba(224,90,12,0.35); }
+  .form-submit:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
+  .form-success { display: none; text-align: center; padding: 32px; }
+  .form-success .success-icon { font-size: 3rem; margin-bottom: 16px; display: block; }
+  .form-success h3 { color: var(--lime); font-size: 1.3rem; font-weight: 900; margin-bottom: 8px; }
+  .form-success p { color: rgba(255,255,255,0.6); font-size: 0.9rem; line-height: 1.6; }
+  @media(max-width:960px){ .form-section { padding: 60px 24px; } .form-wrap { padding: 28px 20px; } }
+
   /* CTA STRIP */
   .cta-strip { background: var(--orange); padding: 80px 48px; text-align: center; position: relative; overflow: hidden; }
   .cta-strip::before { content:''; position:absolute; width:600px; height:600px; border-radius:50%; background:rgba(255,255,255,0.06); top:-200px; right:-100px; }
@@ -243,9 +265,7 @@
   footer p { color: rgba(255,255,255,0.25); font-size: 0.78rem; }
   footer a { color: var(--orange); text-decoration: none; }
 
-  .wa-float { position: fixed; bottom: 28px; right: 28px; background: #25D366; color: white; width: 60px; height: 60px; border-radius: 50%; display: flex; align-items: center; justify-content: center; text-decoration: none; box-shadow: 0 4px 20px rgba(37,211,102,0.4); z-index: 200; transition: all 0.25s; animation: pulse-wa 3s infinite; }
-  .wa-float:hover { transform: scale(1.1); }
-  @keyframes pulse-wa { 0%,100%{box-shadow:0 4px 20px rgba(37,211,102,0.4)}50%{box-shadow:0 4px 36px rgba(37,211,102,0.65)} }
+  50%{box-shadow:0 4px 36px rgba(37,211,102,0.65)} }
 
   @media(max-width:960px){
     .hero{grid-template-columns:1fr;}.hero-right{height:320px;padding-top:0;}
@@ -263,6 +283,32 @@
   .hero h1{animation:fadeUp .5s .1s ease both}
   .hero-sub{animation:fadeUp .5s .2s ease both}
   .hero-actions{animation:fadeUp .5s .3s ease both}
+
+  /* MODAL */
+  .modal-overlay { display:none; position:fixed; inset:0; background:rgba(0,0,0,0.75); z-index:1000; align-items:center; justify-content:center; padding:20px; backdrop-filter:blur(4px); }
+  .modal-overlay.active { display:flex; }
+  .modal-box { background:var(--black); border:1px solid rgba(255,255,255,0.1); border-radius:28px; padding:40px; max-width:520px; width:100%; position:relative; animation:modalIn .3s ease; max-height:90vh; overflow-y:auto; }
+  @keyframes modalIn { from{opacity:0;transform:translateY(20px) scale(0.97)} to{opacity:1;transform:translateY(0) scale(1)} }
+  .modal-close { position:absolute; top:16px; right:16px; background:rgba(255,255,255,0.08); border:none; color:rgba(255,255,255,0.6); width:36px; height:36px; border-radius:50%; font-size:1.1rem; cursor:pointer; display:flex; align-items:center; justify-content:center; transition:all .2s; }
+  .modal-close:hover { background:rgba(255,255,255,0.15); color:white; }
+  .modal-title { font-family:'Nunito',sans-serif; font-size:1.4rem; font-weight:900; color:var(--white); margin-bottom:6px; line-height:1.2; }
+  .modal-sub { color:rgba(255,255,255,0.5); font-size:0.85rem; margin-bottom:28px; line-height:1.5; }
+  .modal-sub span { color:var(--orange); font-weight:800; }
+  .modal-fg { display:flex; flex-direction:column; gap:6px; margin-bottom:16px; }
+  .modal-fg label { font-size:0.72rem; font-weight:800; color:rgba(255,255,255,0.5); text-transform:uppercase; letter-spacing:0.06em; }
+  .modal-fg input, .modal-fg select { background:rgba(255,255,255,0.07); border:1px solid rgba(255,255,255,0.1); border-radius:12px; padding:13px 16px; color:white; font-size:0.92rem; font-family:'Nunito',sans-serif; outline:none; transition:border .2s; width:100%; }
+  .modal-fg input::placeholder { color:rgba(255,255,255,0.25); }
+  .modal-fg input:focus, .modal-fg select:focus { border-color:var(--orange); }
+  .modal-fg select { cursor:pointer; appearance:none; background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='rgba(255,255,255,0.4)' d='M6 8L1 3h10z'/%3E%3C/svg%3E"); background-repeat:no-repeat; background-position:right 16px center; background-color:rgba(255,255,255,0.07); }
+  .modal-fg select option { background:#333434; color:white; }
+  .modal-submit { width:100%; padding:15px; background:var(--orange); color:white; border:none; border-radius:14px; font-size:0.95rem; font-weight:900; cursor:pointer; transition:all .25s; font-family:'Nunito',sans-serif; margin-top:8px; }
+  .modal-submit:hover { background:var(--orange-light); transform:translateY(-2px); box-shadow:0 8px 24px rgba(224,90,12,0.35); }
+  .modal-submit:disabled { opacity:0.6; cursor:not-allowed; transform:none; }
+  .modal-success { display:none; text-align:center; padding:20px 0; }
+  .modal-success .s-icon { font-size:3rem; margin-bottom:16px; display:block; }
+  .modal-success h3 { color:var(--lime); font-size:1.2rem; font-weight:900; margin-bottom:8px; }
+  .modal-success p { color:rgba(255,255,255,0.6); font-size:0.85rem; line-height:1.6; }
+  @media(max-width:480px){ .modal-box{padding:28px 20px;} }
 </style>
 </head>
 <body>
@@ -271,7 +317,7 @@
 <!-- NAV -->
 <nav>
   <div class="nav-logo">Pet<span>land</span> <em>Jasmim</em></div>
-  <a href="https://api.whatsapp.com/send?phone=551932962798&text=Olá,%20quero%20conhecer%20os%20Passaportes%20Petland!" class="nav-cta" target="_blank">Falar no WhatsApp</a>
+  <button class="nav-cta" onclick="openModal()">Quero conhecer os Passaportes</button>
 </nav>
 
 <!-- HERO -->
@@ -281,8 +327,7 @@
     <h1>Seu pet merece<br>o <span class="accent">melhor</span><br>o ano <span class="accent2">todo.</span></h1>
     <p class="hero-sub">Conheça os Passaportes Petland: três planos completos com banho, tosa, higiene, petiscos e experiências exclusivas, com economia real de até R$ 1.735.</p>
     <div class="hero-actions">
-      <a href="#passaportes" class="btn-primary" onclick="event.preventDefault();document.getElementById('como').scrollIntoView({behavior:'smooth'})">Ver os Passaportes 🐾</a>
-      <a href="https://api.whatsapp.com/send?phone=551932962798&text=Olá,%20quero%20conhecer%20os%20Passaportes%20Petland!" class="btn-lime" target="_blank">Falar no WhatsApp</a>
+      <button class="btn-primary" onclick="openModal()">Quero conhecer os Passaportes 🐾</button>
     </div>
   </div>
   <div class="hero-right">
@@ -506,7 +551,7 @@
           <div class="price-parcel">ou 6x de R$ 76,00</div>
           <span class="price-savings">🌿 Economia de R$ 337,00</span>
         </div>
-        <a href="https://api.whatsapp.com/send?phone=551932962798&text=Olá!%20Quero%20o%20Passaporte%20Mundo%20Encantado!" class="pass-cta" target="_blank">Quero esse Passaporte →</a>
+        <button class="pass-cta" onclick="openModal()">Quero conhecer os Passaportes 🐾</button>
       </div>
 
       <!-- SILVER FEATURED -->
@@ -534,7 +579,7 @@
           <div class="price-parcel">ou 12x de R$ 69,90</div>
           <span class="price-savings">🌿 Economia de R$ 764,00</span>
         </div>
-        <a href="https://api.whatsapp.com/send?phone=551932962798&text=Olá!%20Quero%20o%20Passaporte%20Reino%20da%20Diversão!" class="pass-cta" target="_blank">Quero esse Passaporte →</a>
+        <button class="pass-cta" onclick="openModal()">Quero conhecer os Passaportes 🐾</button>
       </div>
 
       <!-- GOLD -->
@@ -565,7 +610,7 @@
           <div class="price-parcel">ou 12x de R$ 99,70</div>
           <span class="price-savings">🌿 Economia de R$ 1.735,00</span>
         </div>
-        <a href="https://api.whatsapp.com/send?phone=551932962798&text=Olá!%20Quero%20o%20Passaporte%20Experiência%20Real!" class="pass-cta" target="_blank">Quero esse Passaporte →</a>
+        <button class="pass-cta" onclick="openModal()">Quero conhecer os Passaportes 🐾</button>
       </div>
 
     </div>
@@ -589,14 +634,94 @@
   </div>
 </section>
 
+<!-- FORMULÁRIO -->
+<section class="form-section" id="formulario">
+  <div class="container">
+    <div style="text-align:center; max-width:580px; margin:0 auto;">
+      <span class="section-label">Quero saber mais</span>
+      <h2 class="section-title" style="text-align:center;">Deixa seu contato e a gente<br>te explica <span class="accent">tudo.</span></h2>
+    </div>
+    <div class="form-wrap">
+      <div id="formContent">
+        <div class="form-group">
+          <label>Nome completo</label>
+          <input type="text" id="field-name" placeholder="Como podemos te chamar?" />
+        </div>
+        <div class="form-group">
+          <label>Telefone / WhatsApp</label>
+          <input type="tel" id="field-phone" placeholder="(19) 99999-0000" />
+        </div>
+        <div class="form-group">
+          <label>E-mail</label>
+          <input type="email" id="field-email" placeholder="seu@email.com" />
+        </div>
+        <div class="form-group">
+          <label>Gostaria de conhecer os Passaportes Petland?</label>
+          <select id="field-interest">
+            <option value="">Selecione...</option>
+            <option value="Sim">Sim, quero conhecer!</option>
+            <option value="Nao">Não por enquanto</option>
+          </select>
+        </div>
+        <button class="form-submit" id="formBtn" onclick="submitForm()">Quero ser contactado 🐾</button>
+      </div>
+      <div class="form-success" id="formSuccess">
+        <span class="success-icon">🐾</span>
+        <h3>Recebemos seu contato!</h3>
+        <p>Em breve nossa equipe vai entrar em contato pelo WhatsApp para te contar tudo sobre os Passaportes Petland.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+async function submitForm() {
+  const name = document.getElementById('field-name').value.trim();
+  const phone = document.getElementById('field-phone').value.trim();
+  const email = document.getElementById('field-email').value.trim();
+  const interest = document.getElementById('field-interest').value;
+
+  if (!name || !phone) {
+    alert('Por favor, preencha seu nome e telefone.');
+    return;
+  }
+
+  const btn = document.getElementById('formBtn');
+  btn.disabled = true;
+  btn.textContent = 'Enviando...';
+
+  const payload = {
+    name: name,
+    phone: phone,
+    email: email,
+    source: 'landing_page',
+    campaign: 'Passaportes Petland Campinas',
+    notes: 'Gostaria de conhecer os Passaportes: ' + (interest || 'Não informado')
+  };
+
+  try {
+    await fetch('https://crm.petlandavbrasil.com.br/api/webhooks/incoming/vvHdvdnChoKqj7YoAR3kkrUtWfJw57I2', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload),
+      mode: 'no-cors'
+    });
+
+    document.getElementById('formContent').style.display = 'none';
+    document.getElementById('formSuccess').style.display = 'block';
+  } catch (e) {
+    btn.disabled = false;
+    btn.textContent = 'Quero ser contactado 🐾';
+    alert('Erro ao enviar. Tente novamente.');
+  }
+}
+</script>
+
 <!-- CTA -->
 <div class="cta-strip">
   <h2>Seu pet merece o ano inteiro<br>de cuidado de verdade.</h2>
   <p>Escolha o Passaporte Petland e esqueça a preocupação de agendar avulso. Tudo resolvido de uma vez, com economia real de até R$ 1.735.</p>
-  <a href="https://api.whatsapp.com/send?phone=551932962798&text=Olá!%20Quero%20conhecer%20os%20Passaportes%20Petland!" class="btn-wa" target="_blank">
-    <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
-    Falar no WhatsApp agora
-  </a>
+  <button class="btn-wa" onclick="openModal()">Quero conhecer os Passaportes 🐾</button>
 </div>
 
 <!-- CONTATO -->
@@ -619,12 +744,62 @@
 </section>
 
 <footer>
-  <p>© 2025 Petland Jasmim — Campinas, SP — <a href="https://petlandavbrasil.com.br/jasmin" target="_blank">petlandavbrasil.com.br/jasmin</a></p>
+  <p>© 2025 Petland Jasmim — Campinas, SP — <a href="https://petlandavbrasil.com.br" target="_blank">petlandavbrasil.com.br</a></p>
 </footer>
 
-<a href="https://api.whatsapp.com/send?phone=551932962798&text=Olá!%20Quero%20conhecer%20os%20Passaportes%20Petland!" class="wa-float" target="_blank">
-  <svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
-</a>
+
+<!-- MODAL -->
+<div class="modal-overlay" id="modalOverlay" onclick="if(event.target===this)closeModal()">
+  <div class="modal-box">
+    <button class="modal-close" onclick="closeModal()">✕</button>
+    <div id="mFormContent">
+      <div class="modal-title">Conhecer os Passaportes Petland</div>
+      <p class="modal-sub">Preencha seus dados e nossa equipe entra em contato para apresentar <span>todos os benefícios.</span></p>
+      <div class="modal-fg"><label>Nome completo</label><input type="text" id="m-name" placeholder="Como podemos te chamar?" /></div>
+      <div class="modal-fg"><label>Telefone / WhatsApp</label><input type="tel" id="m-phone" placeholder="(19) 99999-0000" /></div>
+      <div class="modal-fg"><label>E-mail</label><input type="email" id="m-email" placeholder="seu@email.com" /></div>
+      <div class="modal-fg">
+        <label>Gostaria de conhecer os Passaportes Petland?</label>
+        <select id="m-interest">
+          <option value="">Selecione...</option>
+          <option value="Sim">Sim, quero conhecer!</option>
+          <option value="Nao">Não por enquanto</option>
+        </select>
+      </div>
+      <button class="modal-submit" id="mBtn" onclick="submitModal()">Quero ser contactado 🐾</button>
+    </div>
+    <div class="modal-success" id="mSuccess">
+      <span class="s-icon">🐾</span>
+      <h3>Recebemos seu contato!</h3>
+      <p>Em breve nossa equipe vai entrar em contato para te contar tudo sobre os Passaportes Petland.</p>
+    </div>
+  </div>
+</div>
+<script>
+function openModal(){document.getElementById('modalOverlay').classList.add('active');document.body.style.overflow='hidden';}
+function closeModal(){document.getElementById('modalOverlay').classList.remove('active');document.body.style.overflow='';}
+document.addEventListener('keydown',function(e){if(e.key==='Escape')closeModal();});
+async function submitModal(){
+  const name=document.getElementById('m-name').value.trim();
+  const phone=document.getElementById('m-phone').value.trim();
+  const email=document.getElementById('m-email').value.trim();
+  const interest=document.getElementById('m-interest').value;
+  if(!name||!phone){alert('Por favor, preencha seu nome e telefone.');return;}
+  const btn=document.getElementById('mBtn');
+  btn.disabled=true;btn.textContent='Enviando...';
+  try{
+    await fetch('https://petland-proxy.gabrieloliveira7043.workers.dev', {
+      method:'POST',headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({name,phone,email,source:'landing_page',campaign:'Passaportes Petland Jasmin',notes:'Gostaria de conhecer os Passaportes: '+(interest||'Não informado')})
+    });
+    document.getElementById('mFormContent').style.display='none';
+    document.getElementById('mSuccess').style.display='block';
+  }catch(e){
+    btn.disabled=false;btn.textContent='Quero ser contactado 🐾';
+    alert('Erro ao enviar. Tente novamente.');
+  }
+}
+</script>
 
 </div>
 </body>

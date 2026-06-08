@@ -788,10 +788,7 @@ async function submitModal(){
   const btn=document.getElementById('mBtn');
   btn.disabled=true;btn.textContent='Enviando...';
   try{
-    await fetch('https://petland-proxy.gabrieloliveira7043.workers.dev', {
-      method:'POST',headers:{'Content-Type':'application/json'},
-      body:JSON.stringify({name,phone,email,source:'landing_page',campaign:'Passaportes Petland Jasmin',notes:'Gostaria de conhecer os Passaportes: '+(interest||'Não informado')})
-    });
+    await fetch('https://crm.petlandavbrasil.com.br/api/webhooks/incoming/vvHdvdnChoKqj7YoAR3kkrUtWfJw57I2', {method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({name,phone,email,source:'landing_page',campaign:'Passaportes Petland Jasmin',notes:'Gostaria de conhecer os Passaportes: '+(interest||'Não informado')}),mode:'no-cors'});
     document.getElementById('mFormContent').style.display='none';
     document.getElementById('mSuccess').style.display='block';
   }catch(e){

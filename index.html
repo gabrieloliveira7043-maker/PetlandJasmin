@@ -675,6 +675,81 @@
 </section>
 
 <script>
+const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwdNrRSbLeOplA4z1BvyT1pYVTlHX2uwLakjBrww2alWzWBBsvrBwoY2DV3_OBKSklE0Q/exec';
+const CAPI_TOKEN = 'EAARZBNWNdOxMBRj6G4GfyggW1wrBzN6IQ3m6a7qJZCiEtyacH6HZCgrTHagZC29eRZBhOeBhZBEkqUQB4CZAZBZAZAO7Jqc5O2QWZBPDJGb4Je7q0ExFXrbRDsoviUcsJDnlBkfNSZARbCxWPiq7INJNSA3gyYmX4FeU8w6FWBh13kpdQpFbAObJgPjBR0aGs8ZAnZBsBSfAZDZD';
+const CAPI_PIXEL = '2091548691757748';
+const CAPI_TEST_CODE = 'TEST23902';
+
+async function hashSHA256(str) {
+  if (!str) return null;
+  const normalized = str.trim().toLowerCase();
+  const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(normalized));
+  return Array.from(new Uint8Array(buf)).map(b => b.toString(16).padStart(2, '0')).join('');
+}
+
+function getFbCookies() {
+  const cookies = document.cookie.split(';').reduce((acc, c) => {
+    const [k, v] = c.trim().split('=');
+    acc[k] = v;
+    return acc;
+  }, {});
+  return { fbp: cookies['_fbp'] || null, fbc: cookies['_fbc'] || null };
+}
+
+async function enviarCAPI(eventName, eventId, userData) {
+  try {
+    const { fbp, fbc } = getFbCookies();
+    const hashedEmail = userData.email ? await hashSHA256(userData.email) : null;
+    const hashedPhone = userData.phone ? await hashSHA256(userData.phone.replace(/\D/g, '')) : null;
+
+    const payload = {
+      data: [{
+        event_name: eventName,
+        event_time: Math.floor(Date.now() / 1000),
+        event_id: eventId,
+        event_source_url: window.location.href,
+        action_source: 'website',
+        user_data: {
+          em: hashedEmail ? [hashedEmail] : undefined,
+          ph: hashedPhone ? [hashedPhone] : undefined,
+          client_user_agent: navigator.userAgent,
+          fbp: fbp || undefined,
+          fbc: fbc || undefined
+        }
+      }],
+      test_event_code: CAPI_TEST_CODE
+    };
+
+    await fetch(`https://graph.facebook.com/v19.0/${CAPI_PIXEL}/events?access_token=${CAPI_TOKEN}`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload)
+    });
+  } catch (e) {
+    console.warn('CAPI: erro ao enviar', e);
+  }
+}
+
+async function enviarSheets(nome, telefone, email, interesse, unidade) {
+  try {
+    await fetch(APPS_SCRIPT_URL, {
+      method: 'POST',
+      mode: 'no-cors',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ nome, telefone, email, interesse, unidade })
+    });
+  } catch (e) {
+    console.warn('Sheets: erro ao enviar', e);
+  }
+}
+
+// ViewContent ao carregar a página
+window.addEventListener('load', function() {
+  const eventId = 'vc_' + Date.now();
+  fbq('track', 'ViewContent', {}, { eventID: eventId });
+  enviarCAPI('ViewContent', eventId, {});
+});
+
 async function submitForm() {
   const name = document.getElementById('field-name').value.trim();
   const phone = document.getElementById('field-phone').value.trim();
@@ -695,17 +770,24 @@ async function submitForm() {
     phone: phone,
     email: email,
     source: 'landing_page',
-    campaign: 'Passaportes Petland Campinas',
+    campaign: 'Passaportes Petland Jasmin',
     notes: 'Gostaria de conhecer os Passaportes: ' + (interest || 'Não informado')
   };
 
+  const eventId = 'lead_' + Date.now();
+  fbq('track', 'Lead', {}, { eventID: eventId });
+
   try {
-    await fetch('https://crm.petlandavbrasil.com.br/api/webhooks/incoming/vvHdvdnChoKqj7YoAR3kkrUtWfJw57I2', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(payload),
-      mode: 'no-cors'
-    });
+    await Promise.all([
+      fetch('https://crm.petlandavbrasil.com.br/api/webhooks/incoming/vvHdvdnChoKqj7YoAR3kkrUtWfJw57I2', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload),
+        mode: 'no-cors'
+      }),
+      enviarSheets(name, phone, email, interest || 'Não informado', 'Petland Jasmim'),
+      enviarCAPI('Lead', eventId, { email, phone })
+    ]);
 
     document.getElementById('formContent').style.display = 'none';
     document.getElementById('formSuccess').style.display = 'block';
@@ -787,8 +869,14 @@ async function submitModal(){
   if(!name||!phone){alert('Por favor, preencha seu nome e telefone.');return;}
   const btn=document.getElementById('mBtn');
   btn.disabled=true;btn.textContent='Enviando...';
+  const eventId='lead_'+Date.now();
+  fbq('track','Lead',{},{eventID:eventId});
   try{
-    await fetch('https://crm.petlandavbrasil.com.br/api/webhooks/incoming/vvHdvdnChoKqj7YoAR3kkrUtWfJw57I2', {method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({name,phone,email,source:'landing_page',campaign:'Passaportes Petland Jasmin',notes:'Gostaria de conhecer os Passaportes: '+(interest||'Não informado')}),mode:'no-cors'});
+    await Promise.all([
+      fetch('https://crm.petlandavbrasil.com.br/api/webhooks/incoming/vvHdvdnChoKqj7YoAR3kkrUtWfJw57I2', {method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({name,phone,email,source:'landing_page',campaign:'Passaportes Petland Jasmin',notes:'Gostaria de conhecer os Passaportes: '+(interest||'Não informado')}),mode:'no-cors'}),
+      enviarSheets(name, phone, email, interest||'Não informado', 'Petland Jasmim'),
+      enviarCAPI('Lead', eventId, {email, phone})
+    ]);
     document.getElementById('mFormContent').style.display='none';
     document.getElementById('mSuccess').style.display='block';
   }catch(e){

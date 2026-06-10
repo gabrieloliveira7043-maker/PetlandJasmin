@@ -796,7 +796,7 @@ async function submitForm() {
 
   try {
     await Promise.all([
-      fetch('https://crm.petlandavbrasil.com.br/api/webhooks/incoming/vvHdvdnChoKqj7YoAR3kkrUtWfJw57I2', {
+      fetch('https://petland-proxy.petlandavbrasil.com.br/', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(payload),
@@ -890,7 +890,7 @@ async function submitModal(){
   fbq('track','Lead',{},{eventID:eventId});
   try{
     await Promise.all([
-      fetch('https://crm.petlandavbrasil.com.br/api/webhooks/incoming/vvHdvdnChoKqj7YoAR3kkrUtWfJw57I2', {method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({name,phone,email,source:'landing_page',campaign:'Passaportes Petland Jasmin',notes:'Gostaria de conhecer os Passaportes: '+(interest||'Não informado')}),mode:'no-cors'}),
+      fetch('https://petland-proxy.petlandavbrasil.com.br/', {method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({name,phone,email,source:'landing_page',campaign:'Passaportes Petland Jasmin',notes:'Gostaria de conhecer os Passaportes: '+(interest||'Não informado')}),mode:'no-cors'}),
       enviarSheets(name, phone, email, interest||'Não informado', 'Petland Jasmim'),
       enviarCAPI('Lead', eventId, {email, phone})
     ]);
